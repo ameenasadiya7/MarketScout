@@ -41,8 +41,8 @@ const Competitors = () => {
     setError(null);
     try {
       const url = search
-        ? `http://localhost:8000/api/competitors?search=${encodeURIComponent(search)}`
-        : `http://localhost:8000/api/competitors`;
+        ? `https://marketscout-dnp8.onrender.com/api/competitors?search=${encodeURIComponent(search)}`
+        : `https://marketscout-dnp8.onrender.com/api/competitors`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
@@ -59,7 +59,7 @@ const Competitors = () => {
     setHistoryLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:8000/api/competitors/${encodeURIComponent(company)}/history`
+        `https://marketscout-dnp8.onrender.com/api/competitors/${encodeURIComponent(company)}/history`
       );
       const data = await res.json();
       setCompanyHistory(data.history || []);

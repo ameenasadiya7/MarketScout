@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       if (activeToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${activeToken}`;
         try {
-          const res = await axios.get('http://localhost:8000/api/auth/me');
+          const res = await axios.get('https://marketscout-dnp8.onrender.com/api/auth/me');
           setUser(res.data);
         } catch (err) {
           console.error('Auth check failed', err);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await axios.post('http://localhost:8000/api/auth/login', { email, password });
+    const res = await axios.post('https://marketscout-dnp8.onrender.com/api/auth/login', { email, password });
     const { access_token, user: userData } = res.data;
     localStorage.setItem('token', access_token);
     setToken(access_token);
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const res = await axios.post('http://localhost:8000/api/auth/register', { name, email, password });
+    const res = await axios.post('https://marketscout-dnp8.onrender.com/api/auth/register', { name, email, password });
     const { access_token, user: userData } = res.data;
     localStorage.setItem('token', access_token);
     setToken(access_token);

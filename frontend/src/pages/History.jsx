@@ -44,7 +44,7 @@ const History = () => {
     setLoading(true);
     setError(null);
     try {
-      const res  = await fetch("http://localhost:8000/api/history");
+      const res  = await fetch("https://marketscout-dnp8.onrender.com/api/history");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setHistory(data.history || []);

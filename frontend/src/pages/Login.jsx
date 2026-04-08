@@ -13,7 +13,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8000/api/auth/google';
+    window.location.href = 'https://marketscout-dnp8.onrender.com/api/auth/google';
   };
 
   const handleSubmit = async (e) => {

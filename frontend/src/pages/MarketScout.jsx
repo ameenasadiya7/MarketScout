@@ -39,7 +39,7 @@ const MarketScout = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("http://localhost:8000/api/execute-scout", {
+      const res = await fetch("https://marketscout-dnp8.onrender.com/api/execute-scout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

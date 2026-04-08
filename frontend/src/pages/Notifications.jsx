@@ -14,7 +14,7 @@ export default function Notifications() {
     setError(null);
     try {
       const res  = await fetch(
-        "http://localhost:8000/api/notifications"
+        "https://marketscout-dnp8.onrender.com/api/notifications"
       );
       const data = await res.json();
       const list = Array.isArray(data.alerts) 

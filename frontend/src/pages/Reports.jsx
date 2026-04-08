@@ -338,8 +338,8 @@ const Reports = () => {
     setLoading(true);
     try {
       const url = company
-        ? `http://localhost:8000/api/reports?company=${encodeURIComponent(company)}`
-        : `http://localhost:8000/api/reports`;
+        ? `https://marketscout-dnp8.onrender.com/api/reports?company=${encodeURIComponent(company)}`
+        : `https://marketscout-dnp8.onrender.com/api/reports`;
       const res = await fetch(url);
       const data = await res.json();
       setReports(data.reports || []);
@@ -352,7 +352,7 @@ const Reports = () => {
 
   useEffect(() => {
     fetchReports();
-    fetch("http://localhost:8000/api/reports")
+    fetch("https://marketscout-dnp8.onrender.com/api/reports")
       .then(r => r.json())
       .then(data => {
         const unique = [

@@ -7,7 +7,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/settings/stats")
+    fetch("https://marketscout-dnp8.onrender.com/api/settings/stats")
       .then(r => r.json())
       .then(d => { setStats(d); setLoading(false); })
       .catch(() => setLoading(false));

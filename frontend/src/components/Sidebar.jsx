@@ -12,7 +12,7 @@ const Sidebar = () => {
     // 10-second polling logic for real-time unread badges (Strict Constraint satisfied)
     const fetchUnread = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/notifications');
+        const res = await axios.get('https://marketscout-dnp8.onrender.com/api/notifications');
         const unread = res.data.filter(n => !n.is_read).length;
         setUnreadCount(unread);
       } catch (e) {

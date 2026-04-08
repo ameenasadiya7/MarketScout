@@ -13,7 +13,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:8000/api/dashboard"
+        "https://marketscout-dnp8.onrender.com/api/dashboard"
       );
       const json = await res.json();
       setData(json);
