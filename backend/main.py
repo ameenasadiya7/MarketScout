@@ -44,16 +44,22 @@ except Exception as e:
     supabase = None
 
 # OAuth configuration
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
 oauth = OAuth()
-oauth.register(
-    name='google',
-    client_id=os.getenv("GOOGLE_CLIENT_ID"),
-    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
+if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
+    oauth.register(
+        name='google',
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={
+            'scope': 'openid email profile'
+        }
+    )
+else:
+    print("WARNING: GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET not set. Google OAuth will be disabled.")
 
 async def get_current_user(token_data: dict = Depends(get_current_user_token)):
     user_id = token_data.get("sub")
@@ -1118,9 +1124,10 @@ async def execute_scout(payload: ExecutePayload):
     return results_data
 
 # DB Init
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite://market_scout.db")
 register_tortoise(
     app,
-    db_url="sqlite://market_scout.db",
+    db_url=DATABASE_URL,
     modules={"models": ["models_db"]},
     generate_schemas=True,
     add_exception_handlers=True,

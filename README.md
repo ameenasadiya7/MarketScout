@@ -44,10 +44,11 @@ Built for strategy teams and market analysts, it leverages the power of **Google
 3.  **Build Command**: `pip install -r backend/requirements.txt`.
 4.  **Start Command**: `cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT`.
 5.  **Environment Variables**:
-    -   `PYTHON_VERSION`: `3.12.5` *(Required for compatibility)*
+    -   `PYTHON_VERSION`: `3.11.8` *(Recommended for compatibility)*
     -   `GEMINI_API_KEY`: Your Google AI Studio key.
     -   `TAVILY_API_KEY`: Your Tavily search key.
     -   `SUPABASE_URL` & `SUPABASE_KEY`: Your Supabase connection details.
+    -   `DATABASE_URL`: Your Supabase connection string (PostgreSQL).
     -   `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET`: From Google Cloud Console.
     -   `FRONTEND_URL`: Your deployed Netlify URL.
 
@@ -61,14 +62,18 @@ Built for strategy teams and market analysts, it leverages the power of **Google
 
 ---
 
+## 🏗️ Production Stability
+
+The backend now includes **Robust Initialization**. If your API keys (like Google OAuth) aren't set yet, the server will still boot but print a warning. This prevents the common `Exited with status 1` error on Render.
+
+---
+
 ## ⚠️ Troubleshooting: Render Build Failure
 
 If you encounter an error like `Failed to build asyncpg` or `Failed building wheel for asyncpg` on Render:
 
-1.  **Why it happens**: Render defaults to a developmental version of Python (3.14+) which is incompatible with many database libraries.
-2.  **The Fix**: 
-    -   Ensure `runtime.txt` exists in your project containing `python-3.12.5`.
-    -   Set the `PYTHON_VERSION` environment variable to `3.12.5` in the Render dashboard.
+1.  **Check Python Version**: Render defaults to a developmental version (3.14+). Ensure you have set the `PYTHON_VERSION` environment variable to `3.11.8`.
+2.  **Check Dependencies**: Ensure your `requirements.txt` includes `aiosqlite` and `asyncpg`.
 
 ---
 
