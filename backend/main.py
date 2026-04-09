@@ -1127,6 +1127,9 @@ async def execute_scout(payload: ExecutePayload):
 
 # DB Init
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite://market_scout.db")
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgres://", 1)
+
 register_tortoise(
     app,
     db_url=DATABASE_URL,
