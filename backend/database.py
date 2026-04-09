@@ -7,6 +7,9 @@ load_dotenv()
 POSTGRES_URL = os.getenv("SUPABASE_URL", "sqlite://db.sqlite3") # Fallback to sqlite if no URL for dev safety, but we will strictly use PG ideally
 # If using supabase dashboard DB URL:
 DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgres://", 1)
+
 if not DATABASE_URL and POSTGRES_URL.startswith("http"):
     # Supabase gives a REST URL in SUPABASE_URL, and DB URL in DATABASE_URL. 
     # If using strictly DB driver, we need a postgres:// URL.

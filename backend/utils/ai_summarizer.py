@@ -3,8 +3,8 @@ import json
 import asyncio
 import datetime
 from typing import List, Dict, Any, Optional
-import google.generativeai as genai
-from google.generativeai.types import GenerationConfig
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,21 +12,25 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 DEFAULT_MODEL = "gemini-2.5-flash" # Use 2.5-flash as found in list_models
 
+client = None
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=GEMINI_API_KEY)
 
 async def call_gemini_with_retry(prompt: str, response_mime_type: str = "application/json", retries: int = 2) -> Optional[str]:
     """Call Gemini with exponential backoff for 429 errors."""
-    if not GEMINI_API_KEY:
+    if not client:
         return None
 
     model_name = os.getenv("GEMINI_MODEL", DEFAULT_MODEL)
-    model = genai.GenerativeModel(model_name)
-    config = GenerationConfig(response_mime_type=response_mime_type)
+    config = types.GenerateContentConfig(response_mime_type=response_mime_type)
 
     for attempt in range(retries + 1):
         try:
-            response = await model.generate_content_async(prompt, generation_config=config)
+            response = await client.aio.models.generate_content(
+                model=model_name, 
+                contents=prompt, 
+                config=config
+            )
             if response and response.text:
                 return response.text
         except Exception as e:

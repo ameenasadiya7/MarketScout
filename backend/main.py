@@ -30,7 +30,7 @@ from auth import (
     create_access_token, 
     get_current_user as get_current_user_token
 )
-import google.generativeai as genai
+from google import genai
 import json
 from pydantic import BaseModel
 import re
@@ -634,11 +634,8 @@ async def get_settings_stats():
         # Test Gemini connection
         gemini_status = "connected"
         try:
-            genai.configure(
-                api_key=os.getenv("GEMINI_API_KEY")
-            )
-            model = genai.GenerativeModel("gemini-2.0-flash")
-            model.generate_content("ping")
+            client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+            client.models.generate_content(model="gemini-2.5-flash", contents="ping")
         except:
             gemini_status = "error"
 
